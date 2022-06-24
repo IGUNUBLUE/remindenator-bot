@@ -1,4 +1,5 @@
 # TheBDayBot
+
 _A simple birthday reminder bot for Telegram._
 
 Want to add it to your group?
@@ -7,12 +8,15 @@ Look for [@the_bday_bot](http://t.me/the_bday_bot) on telegram
 Note: it only works for groups since every birthday is tied to a specific group member id / username.
 
 ## Want to host it by yourself?
+
 1. Clone this repository onto your server
+
 ```
 git clone https://github.com/azzlabs/the_bday_bot.git
 ```
 
 2. Install all the dependencies - You'll need `npm` installed!
+
 ```
 npm install
 ```
