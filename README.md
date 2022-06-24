@@ -1,6 +1,6 @@
 # Remindenator
 
-_A simple birthday reminder bot for Telegram._
+_A simple reminder bot for Telegram._
 
 ## Want to host it by yourself?
 
