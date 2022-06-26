@@ -1,5 +1,5 @@
 const logger = require('../services/logger');
-const client = require('./client');
+const client = require('./mongo_client');
 
 module.exports = async function close() {
   await client.close();

@@ -1,10 +1,6 @@
-const { MongoClient } = require('mongodb');
-const config = require('../config');
+const client = require('./mongo_client');
 const logger = require('../services/logger');
-
-const client = new MongoClient(config.mongo_url, {
-  useUnifiedTopology: true,
-});
+const config = require('../config');
 
 async function connect(collection) {
   try {
