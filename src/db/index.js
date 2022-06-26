@@ -1,39 +1,21 @@
-class BotDatabaseFunctions {
-  constructor(config) {
-    // Load config
-    this.mongo_url = config.mongo_url;
-    this.mongo_db_name = config.mongo_db_name;
+const config = require('../config');
+const logger = require('../services/logger');
+const close = require('./close_connection');
+const connect = require('./connection');
 
-    // Collection names
-    this.setting_collection = 'bot_settings';
-  }
-
-  // Executes a database transaction with MongoDB
-  async mongoTransaction(collName, callback) {
-    const Client = require('mongodb').MongoClient(this.mongo_url, {
-      useUnifiedTopology: true,
-    });
-    let res = [];
-
+module.exports = {
+  getDocuments: async function (
+    collectionName = config.eventsCollection,
+    pipeline = []
+  ) {
     try {
-      await Client.connect();
-      const database = Client.db(this.mongo_db_name);
-      const collection = database.collection(collName);
-
-      res = await callback(collection);
+      const collection = await connect(collectionName);
+      const result = await collection.aggregate(pipeline).toArray();
+      return result;
+    } catch (err) {
+      logger.error(err);
     } finally {
-      await Client.close();
+      close();
     }
-
-    return res;
-  }
-
-  // Finds data from a collection
-  async find(collName, filters) {
-    return await this.mongoTransaction(collName, async function (coll) {
-      return await coll.find(filters).toArray();
-    });
-  }
-}
-
-module.exports = BotDatabaseFunctions;
+  },
+};

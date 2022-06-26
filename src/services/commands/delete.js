@@ -1,6 +1,6 @@
 // -- "Delete birthday" command: deletes a birthday record -- //
 const MongoDB = require('../../db');
-const config = require('../../../config');
+const config = require('../../config');
 const logger = require('../logger');
 
 const db = new MongoDB(config);

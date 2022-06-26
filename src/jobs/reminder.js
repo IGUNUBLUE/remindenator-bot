@@ -1,63 +1,74 @@
 const CronJob = require('cron').CronJob;
 
+const db = require('../db');
+const config = require('../config');
+const logger = require('../services/logger');
 const wishes = require('../constants/birthday_wishes.json');
+const isLeapYear = require('../utils/is_leap_year');
+const yearDay = require('../utils/year_day');
 // -- The cron job. Runs everyday at 8:30. -- //
-const start = new CronJob(
-  '30 8 * * *',
-  async function () {
-    console.log('Cron job has been fired');
+const executionTime = '30 8 * * *';
+const events = config.eventsCollection;
+const pipeline = [{ $match: {} }];
 
-    // Finds all groups
-    const groups = await db.find('groups');
+function reminderJob(bot) {
+  return new CronJob(
+    executionTime,
+    async function () {
+      logger.info('Cron job has been fired');
+      const reminders = await db.getDocuments(
+        config.eventsCollection,
+        pipeline
+      );
+      reminders.forEach(async (grp) => {
+        const dayFind = yearDay(new Date());
 
-    groups.forEach(async (grp) => {
-      var day_find = yearDay(new Date());
+        let foundEvents = await db.getReminders(events, {
+          chat_id: grp.chat_id,
+          year_day: dayFind,
+        });
 
-      var birthdays = await db.find('birthdays', {
-        chat_id: grp.chat_id,
-        year_day: day_find,
+        // Doing a second check if it's not a leap year (birthdays on the 29th of February will be called on the 28th)
+        if (dayFind === 59 && !isLeapYear(new Date())) {
+          foundEvents = foundEvents.concat(
+            await db().getReminders(events, {
+              chat_id: grp.chat_id,
+              year_day: dayFind + 1,
+            })
+          );
+        }
+
+        foundEvents.forEach(async (cumple) => {
+          const year = cumple.bday.getFullYear();
+          const old =
+            year === 1804
+              ? ''
+              : ` They're now ${new Date().getFullYear() - year} years old!`;
+
+          const name =
+            cumple.username == null
+              ? `*${cumple.first_name}*'s`
+              : `@${cumple.username}'s`;
+
+          // "Today it's @someuser' birthday. (They're now 21 years old! optional)"
+          await bot.telegram.sendMessage(
+            grp.chat_id,
+            `Today it's ${name} birthday.${old}`
+          );
+
+          // Selects a random birthday wish from file
+          const rand = Math.floor(Math.random() * wishes.length);
+          await bot.telegram.sendMessage(
+            grp.chat_id,
+            `${wishes[rand]} - Happy birthday! 🥳`
+          );
+        });
       });
+    },
+    null,
+    true,
+    config.cronTimeZone
+  );
+}
 
-      // Doing a second check if it's not a leap year (birthdays on the 29th of February will be called on the 28th)
-      if (day_find == 59 && !isLeapYear(new Date())) {
-        birthdays = birthdays.concat(
-          await db.find('birthdays', {
-            chat_id: grp.chat_id,
-            year_day: day_find + 1,
-          })
-        );
-      }
-
-      birthdays.forEach(async (cumple) => {
-        const year = cumple.bday.getFullYear();
-        const old =
-          year == 1804
-            ? ''
-            : ` They're now ${new Date().getFullYear() - year} years old!`;
-
-        const name =
-          cumple.username == null
-            ? `*${cumple.first_name}*'s`
-            : `@${cumple.username}'s`;
-
-        // "Today it's @someuser' birthday. (They're now 21 years old! optional)"
-        await bot.telegram.sendMessage(
-          grp.chat_id,
-          `Today it's ${name} birthday.${old}`
-        );
-
-        // Selects a random birthday wish from file
-        var rand = Math.floor(Math.random() * wishes.length);
-        await bot.telegram.sendMessage(
-          grp.chat_id,
-          `${wishes[rand]} - Happy birthday! 🥳`
-        );
-      });
-    });
-  },
-  null,
-  true,
-  'Europe/Rome'
-);
-
-module.exports = start;
+module.exports = reminderJob;

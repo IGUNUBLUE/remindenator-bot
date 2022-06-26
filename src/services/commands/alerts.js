@@ -1,6 +1,6 @@
 // -- "Start alerts" command: adds the group to the alerts list -- //
 const MongoDB = require('../../db');
-const config = require('../../../config');
+const config = require('../../config');
 const logger = require('../logger');
 
 const db = new MongoDB(config);

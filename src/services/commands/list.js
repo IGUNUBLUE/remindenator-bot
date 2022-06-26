@@ -1,6 +1,6 @@
 // -- "All birthdays" command: sends a list of all the birthdays added for a group -- //
 const MongoDB = require('../../db');
-const config = require('../../../config');
+const config = require('../../config');
 const months = require('../../constants/months');
 const padZero = require('../../utils/pad_zero');
 const logger = require('../logger');

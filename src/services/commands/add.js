@@ -1,9 +1,7 @@
 // -- "Add birthday" command: sends info and sets data to insert a birthday -- //
-const MongoDB = require('../../db');
-const config = require('../../../config');
+const config = require('../../config');
+const db = require('../../db');
 const logger = require('../logger');
-
-const db = new MongoDB(config);
 
 module.exports = async function add(ctx, state) {
   logger.info('Called /add');
@@ -11,12 +9,16 @@ module.exports = async function add(ctx, state) {
   const userId = ctx.message.from.id;
 
   // Check if the birthday is already in the database
-  const check = await db.find('birthdays', {
-    chat_id: ctx.message.chat.id,
-    user_id: userId,
-  });
+  const result = await db.getDocuments(config.eventsCollection, [
+    {
+      $match: {
+        chat_id: ctx.message.chat.id,
+        user_id: userId,
+      },
+    },
+  ]);
 
-  if (check.length > 0) {
+  if (result.length) {
     return ctx.reply(
       'You already told us your birthday.' +
         '\n' +

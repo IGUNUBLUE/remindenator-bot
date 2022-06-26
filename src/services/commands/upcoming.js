@@ -1,5 +1,5 @@
 const MongoDB = require('../../db');
-const config = require('../../../config');
+const config = require('../../config');
 const yearDay = require('../../utils/year_day');
 const padZero = require('../../utils/pad_zero');
 const months = require('../../constants/months');
