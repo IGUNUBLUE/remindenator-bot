@@ -20,4 +20,4 @@ npm install
 
 4. You can either run it on the shell with `npm start` or in background using pm2 `pm2 start index.js`
 
-Note: it requires MongoDB to run! You can specify the MongoDB uri and the database name into the `.env` file. You'll just need to create a database and create a couple of collections named `birthdays` and `groups` respectively
+Note: it requires MongoDB to run! You can specify the MongoDB uri and the database name into the `.env` file. You'll just need to create a database and create a couple of collections named `events` and `groups` respectively
