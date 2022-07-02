@@ -1,5 +1,5 @@
 // -- "Start" command: gets bot info -- //
-const logger = require('../logger');
+const logger = require('../logger.service');
 const botMessages = require('../../constants/bot_messages');
 
 module.exports = function start(ctx) {

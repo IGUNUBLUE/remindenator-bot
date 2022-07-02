@@ -1,11 +1,11 @@
 // -- "Today's birthdays" command: sends a list with today's birthdays -- //
 const MongoDB = require('../../db');
 const config = require('../../config');
-const yearDay = require('../../utils/year_day');
-const padZero = require('../../utils/pad_zero');
-const isLeapYear = require('../../utils/is_leap_year');
+const yearDay = require('../../utils/year-day.util');
+const padZero = require('../../utils/pad-zero.util');
+const isLeapYear = require('../../utils/is-leap-year.util');
 const months = require('../../constants/months');
-const logger = require('../logger');
+const logger = require('../logger.service');
 
 const db = new MongoDB(config);
 

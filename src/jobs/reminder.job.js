@@ -2,7 +2,7 @@ const CronJob = require('cron').CronJob;
 
 const db = require('../db');
 const config = require('../config');
-const logger = require('../services/logger');
+const logger = require('../services/logger.service');
 const wishes = require('../constants/birthday_wishes.json');
 const isLeapYear = require('../utils/is_leap_year');
 const yearDay = require('../utils/year_day');

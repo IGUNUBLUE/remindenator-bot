@@ -2,8 +2,8 @@
 const MongoDB = require('../../db');
 const config = require('../../config');
 const months = require('../../constants/months');
-const padZero = require('../../utils/pad_zero');
-const logger = require('../logger');
+const padZero = require('../../utils/pad-zero.util');
+const logger = require('../logger-service');
 
 const db = new MongoDB(config);
 

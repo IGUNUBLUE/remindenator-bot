@@ -1,7 +1,7 @@
 // -- "Stop alerts" command: removes the group from the alerts list -- //
 const MongoDB = require('../../db');
 const config = require('../../config');
-const logger = require('../logger');
+const logger = require('../logger.service');
 
 const db = new MongoDB(config);
 
