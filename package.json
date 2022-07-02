@@ -26,6 +26,7 @@
     "cron": "2.0.0",
     "dotenv": "16.0.1",
     "mongodb": "4.7.0",
+    "mongoose": "6.4.2",
     "telegraf": "4.8.5",
     "winston": "3.8.0"
   },
