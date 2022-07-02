@@ -1,6 +1,6 @@
 // -- "Add birthday" command: sends info and sets data to insert a birthday -- //
 const config = require('../../config');
-const botMessages = require('../../constants/bot_messages');
+const botMessages = require('../../constants/bot-messages.constant');
 const db = require('../db/operations-db.service');
 const logger = require('../logger.service');
 
