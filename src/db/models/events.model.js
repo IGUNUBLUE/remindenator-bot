@@ -1,6 +1,7 @@
 const mongoose = require('mongoose');
 
 const eventsSchema = new mongoose.Schema({
+  _id: String,
   group_id: String,
   user_id: String,
   username: String,
