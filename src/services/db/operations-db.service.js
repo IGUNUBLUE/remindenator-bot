@@ -1,6 +1,5 @@
 const config = require('../../config');
 const logger = require('../logger.service');
-const close = require('./close_connection');
 const connect = require('./connection-db.service');
 
 module.exports = {
@@ -14,8 +13,6 @@ module.exports = {
       return result;
     } catch (err) {
       logger.error(err);
-    } finally {
-      close();
     }
   },
 };
