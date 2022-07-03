@@ -2,8 +2,8 @@ const mongoose = require('mongoose');
 
 const eventsSchema = new mongoose.Schema({
   _id: String,
-  group_id: String,
-  user_id: String,
+  chat_id: Number,
+  user_id: Number,
   username: String,
   first_name: String,
   event_date: Date,
@@ -11,6 +11,6 @@ const eventsSchema = new mongoose.Schema({
   event_description: String,
 });
 
-const eventsModel = mongoose.model('Events', eventsSchema);
+const EventModel = mongoose.model('Events', eventsSchema);
 
-module.exports = eventsModel;
+module.exports = EventModel;
