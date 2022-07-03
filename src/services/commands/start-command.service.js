@@ -1,8 +1,9 @@
-// -- "Start" command: gets bot info -- //
 const logger = require('../logger.service');
-const botMessages = require('../../constants/bot-messages.constant');
+const internalMessages = require('../../constants/internal-messages.constant');
 
 module.exports = function start(ctx) {
-  logger.info(`${ctx.message.from.username} ${botMessages.cmdStart.log}`);
-  ctx.reply(botMessages.cmdStart.executionReply);
+  logger.info(
+    `${ctx.message.from.username} ${internalMessages.commands.start.info.log}`
+  );
+  ctx.reply(internalMessages.commands.start.info.executionReply);
 };
