@@ -24,6 +24,7 @@
   "license": "ISC",
   "dependencies": {
     "cron": "2.0.0",
+    "dayjs": "1.11.3",
     "dotenv": "16.0.1",
     "mongodb": "4.7.0",
     "mongoose": "6.4.2",
