@@ -1,7 +1,6 @@
 const internalMessages = require('../../constants/internal-messages.constant');
 const formatDates = require('../../constants/format-dates.constant');
 const typeChats = require('../../constants/type-chats.constant');
-const regex = require('../../constants/regex.constant');
 const replaceCases = require('../../constants/replace-cases.constant');
 const logger = require('../logger.service');
 const EventModel = require('../../db/models/events.model');
@@ -19,13 +18,10 @@ module.exports = async function addEvent(ctx) {
   if (type === typeChats.private || type === typeChats.channel) {
     return ctx.replyWithMarkdown(internalMessages.commands.add.warn.typeChat);
   }
-  if (eventName.length <= 3) {
+  if (eventName.length <= 3 || eventName.length > 30) {
     return ctx.reply(
       internalMessages.commands.add.warn.minimumCharacterEventName
     );
-  }
-  if (!regex.withOutSpecialCharacters.test(eventName)) {
-    return ctx.reply(internalMessages.commands.add.warn.validStringEventName);
   }
   if (!dateModule(eventDate, formatDates.user.events, true).isValid()) {
     return ctx.reply(internalMessages.commands.add.warn.validDate);
@@ -38,6 +34,24 @@ module.exports = async function addEvent(ctx) {
   const eventDescription = textInCommand.split('|')[2] || '';
   const [day, month, year] = eventDate.split('-');
   const isoDateFormat = `${year}-${month}-${day}`;
+  const foundEvent = await EventModel.findOne({
+    user_id: userId,
+    event_name: eventName,
+    event_date: isoDateFormat,
+  }).exec();
+
+  if (
+    foundEvent &&
+    eventName === foundEvent.event_name &&
+    dateModule(foundEvent.event_date).isSame(new Date(isoDateFormat))
+  ) {
+    return ctx.replyWithMarkdown(
+      `${internalMessages.commands.add.warn.thereIsSimilarEvent}\n➤ ${
+        importantEvents[eventName] ? 'My birthday' : eventName
+      }\n➤ ${eventDate}\n➤ ${eventDescription}`
+    );
+  }
+
   const newEvent = new EventModel({
     _id: getUuid(),
     chat_id: chatId,

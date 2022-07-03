@@ -21,6 +21,8 @@ module.exports = {
         validStringEventName:
           "Ups... Event name can't contain special characters",
         validDate: "mmm... I think the date don't have the correct format.",
+        thereIsSimilarEvent:
+          '😲 I think you created this event before. Look at this:',
       },
       error: {},
     },
