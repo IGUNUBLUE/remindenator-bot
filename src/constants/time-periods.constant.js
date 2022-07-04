@@ -1,6 +1,8 @@
 module.exports = {
-  user: {
-    eventsDate: 'DD-MM-YYYY',
+  format: {
+    user: {
+      eventsDate: 'DD-MM-YYYY',
+    },
   },
   months: [
     'January',
