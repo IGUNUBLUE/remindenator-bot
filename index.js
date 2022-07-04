@@ -9,7 +9,7 @@ async function startApp() {
   try {
     bot.launch();
     await mongoose.connect(config.mongo_url);
-    logger.info(internalMessages.app.info.db.connect);
+    logger.info(internalMessages.others.info.dbConnection);
     // reminderJob(bot).start();
   } catch (err) {
     logger.error(err);
