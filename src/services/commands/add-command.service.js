@@ -1,5 +1,5 @@
 const internalMessages = require('../../constants/internal-messages.constant');
-const formatDates = require('../../constants/format-dates.constant');
+const timePeriods = require('../../constants/time-periods.constant');
 const typeChats = require('../../constants/type-chats.constant');
 const logger = require('../logger.service');
 const EventModel = require('../../db/models/events.model');
@@ -22,7 +22,9 @@ module.exports = async function addEvent(ctx) {
       internalMessages.commands.add.warn.minimumCharacterEventName
     );
   }
-  if (!dayjsPlus(eventDate, formatDates.user.eventsDate, true).isValid()) {
+  if (
+    !dayjsPlus(eventDate, timePeriods.format.user.eventsDate, true).isValid()
+  ) {
     return ctx.reply(internalMessages.commands.add.warn.validDate);
   }
 
