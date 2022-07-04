@@ -6,7 +6,7 @@ const logger = require('../logger.service');
 const EventModel = require('../../db/models/events.model');
 const getUuid = require('../../utils/get-uuid.utils');
 const importantEvents = require('../../constants/important-events.constant');
-const dateModule = require('../../utils/date-module.util');
+const dayjsPlus = require('../../utils/extended-dayjs');
 
 module.exports = async function addEvent(ctx) {
   logger.info(internalMessages.commands.add.info.log);
@@ -23,7 +23,7 @@ module.exports = async function addEvent(ctx) {
       internalMessages.commands.add.warn.minimumCharacterEventName
     );
   }
-  if (!dateModule(eventDate, formatDates.user.events, true).isValid()) {
+  if (!dayjsPlus(eventDate, formatDates.user.eventsDate, true).isValid()) {
     return ctx.reply(internalMessages.commands.add.warn.validDate);
   }
 
@@ -43,11 +43,13 @@ module.exports = async function addEvent(ctx) {
   if (
     foundEvent &&
     eventName === foundEvent.event_name &&
-    dateModule(foundEvent.event_date).isSame(new Date(isoDateFormat))
+    dayjsPlus(foundEvent.event_date).isSame(new Date(isoDateFormat))
   ) {
     return ctx.replyWithMarkdown(
       `${internalMessages.commands.add.warn.thereIsSimilarEvent}\n➤ ${
-        importantEvents[eventName] ? 'My birthday' : eventName
+        importantEvents[eventName]
+          ? `My ${importantEvents[eventName]}`
+          : eventName
       }\n➤ ${eventDate}\n➤ ${eventDescription}`
     );
   }
@@ -66,11 +68,11 @@ module.exports = async function addEvent(ctx) {
   await newEvent.save();
 
   if (importantEvents[eventName]) {
-    const message = internalMessages.commands.add.info.importantEvent.replace(
-      replaceCases.command.messages.importEventName,
-      importantEvents[eventName]
+    const [startFragment, endFragment] =
+      internalMessages.commands.add.info.importantEvent;
+    return ctx.replyWithMarkdown(
+      `${startFragment} ${importantEvents[eventName]}${endFragment}`
     );
-    return ctx.replyWithMarkdown(message);
   }
 
   return ctx.replyWithMarkdown(internalMessages.commands.add.info.normalEvent);
