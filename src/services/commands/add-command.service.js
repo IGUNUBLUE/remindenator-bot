@@ -1,7 +1,6 @@
 const internalMessages = require('../../constants/internal-messages.constant');
 const formatDates = require('../../constants/format-dates.constant');
 const typeChats = require('../../constants/type-chats.constant');
-const replaceCases = require('../../constants/replace-cases.constant');
 const logger = require('../logger.service');
 const EventModel = require('../../db/models/events.model');
 const getUuid = require('../../utils/get-uuid.utils');
