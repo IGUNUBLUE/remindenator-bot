@@ -1,5 +1,5 @@
 const mongoose = require('mongoose');
-const internalMessages = require('./src/constants/internal-messages.constant');
+const messages = require('./src/constants/messages.constant');
 // const reminderJob = require('./src/jobs/reminder');
 const bot = require('./src/bot');
 const config = require('./src/config');
@@ -9,7 +9,7 @@ async function startApp() {
   try {
     bot.launch();
     await mongoose.connect(config.mongo_url);
-    logger.info(internalMessages.others.info.dbConnection);
+    logger.info(messages.logger.info.dbConnection);
     // reminderJob(bot).start();
   } catch (err) {
     logger.error(err);
