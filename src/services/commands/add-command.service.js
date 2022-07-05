@@ -14,7 +14,7 @@ const MAXIMUM_LENGTH = 30;
 module.exports = async function addEvent(ctx, commandName) {
   try {
     if (typeChatVerification(ctx.message.chat.type)) {
-      return ctx.replyWithMarkdown(messages.commands.add.typeChat);
+      return ctx.replyWithMarkdown(messages.main.typeChat);
     } else {
       const { fullCmd } = getFullCommand(commandName);
       const textInCommand = ctx.message.text.replace(fullCmd, '');
