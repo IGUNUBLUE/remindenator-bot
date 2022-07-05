@@ -7,4 +7,8 @@ module.exports = {
   eventsCollection: 'events',
   groupsCollection: 'groups',
   cronTimeZone: process.env.CRON_TIME_ZONE,
+  commandNames: {
+    start: 'start',
+    addEvent: 'add',
+  },
 };
