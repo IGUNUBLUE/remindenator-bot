@@ -1,9 +1,9 @@
 const logger = require('../logger.service');
-const internalMessages = require('../../constants/internal-messages.constant');
+const messages = require('../../constants/messages.constant');
+const config = require('../../config');
 
-module.exports = function start(ctx) {
-  logger.info(
-    `${ctx.message.from.username} ${internalMessages.commands.start.info.log}`
-  );
-  ctx.reply(internalMessages.commands.start.info.executionReply);
+module.exports = function startBot(ctx) {
+  ctx.reply(messages.commands.start.executionReply);
+
+  return logger.info(`${config.commandNames.start} ${messages.logger.info.successCmd}`);
 };
