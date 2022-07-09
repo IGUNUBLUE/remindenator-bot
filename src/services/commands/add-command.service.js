@@ -1,8 +1,8 @@
 const EventModel = require('../../db/models/events.model');
 const logger = require('../logger.service');
-const messages = require('../../constants/messages.constant');
+const textStrings = require('../../constants/text-strings.constant');
 const timePeriods = require('../../constants/time-periods.constant');
-const importantEvents = require('../../constants/important-events.constant');
+const defaultEvents = require('../../constants/default-events.constant');
 const typeChatVerification = require('../../utils/type-chat-verification.utils');
 const getUuid = require('../../utils/get-uuid.utils');
 const dayjsPlus = require('../../utils/extended-dayjs.util');
@@ -14,13 +14,13 @@ const MAXIMUM_LENGTH = 30;
 module.exports = async function addEvent(ctx, commandName) {
   try {
     if (typeChatVerification(ctx.message.chat.type)) {
-      return ctx.replyWithMarkdown(messages.main.typeChat);
+      return ctx.replyWithMarkdown(textStrings.main.typeChat);
     } else {
       const { fullCmd } = getFullCommand(commandName);
       const textInCommand = ctx.message.text.replace(fullCmd, '');
 
       if (!textInCommand.length || !textInCommand.includes('|')) {
-        return ctx.reply(messages.commands.add.withoutFieldsDividerOrCharacters);
+        return ctx.reply(textStrings.commands.addEvent.withoutFieldsDividerOrCharacters);
       }
 
       const eventName = textInCommand.split('|')[0].trim();
@@ -31,7 +31,7 @@ module.exports = async function addEvent(ctx, commandName) {
         eventName.length > MAXIMUM_LENGTH ||
         !dayjsPlus(eventDate, timePeriods.format.user.eventsDate, true).isValid()
       ) {
-        return ctx.reply(messages.commands.add.lengthEventNameOrFormatDate);
+        return ctx.reply(textStrings.commands.addEvent.lengthEventNameOrFormatDate);
       }
 
       const {
@@ -53,9 +53,13 @@ module.exports = async function addEvent(ctx, commandName) {
         dayjsPlus(foundEvent.event_date).isSame(new Date(isoDateFormat))
       ) {
         return ctx.replyWithMarkdown(
-          `${messages.commands.add.thereIsSimilarEvent}\n➤ ${
-            importantEvents[eventName] ? `My ${importantEvents[eventName]}` : eventName
-          }\n➤ ${eventDate}\n➤ ${eventDescription}`
+          `${textStrings.commands.addEvent.thereIsSimilarEvent}\n *${
+            textStrings.events.fields.eventName
+          }*${
+            defaultEvents[eventName] ? `My ${defaultEvents[eventName]}` : eventName
+          }\n*${textStrings.events.fields.eventDate}*${eventDate}\n*${
+            textStrings.events.fields.eventDesc
+          }*${eventDescription}`
         );
       }
 
@@ -71,16 +75,16 @@ module.exports = async function addEvent(ctx, commandName) {
       });
       await newEvent.save();
 
-      if (importantEvents[eventName]) {
-        const [startFragment, endFragment] = messages.commands.add.importantEvent;
+      if (defaultEvents[eventName]) {
+        const [startFragment, endFragment] = textStrings.commands.addEvent.importantEvent;
         ctx.replyWithMarkdown(
-          `${startFragment} ${importantEvents[eventName]}${endFragment}`
+          `${startFragment} ${defaultEvents[eventName]}${endFragment}`
         );
       } else {
-        ctx.replyWithMarkdown(messages.commands.add.normalEvent);
+        ctx.replyWithMarkdown(textStrings.commands.addEvent.normalEvent);
       }
 
-      return logger.info(`${fullCmd} ${messages.logger.info.successCmd}`);
+      return logger.info(`${fullCmd} ${textStrings.logger.info.successCmd}`);
     }
   } catch (err) {
     console.log(err);

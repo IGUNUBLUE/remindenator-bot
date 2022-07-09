@@ -6,7 +6,7 @@ module.exports = {
     start: {
       executionReply: `👋🏻 Hi, I'm remindenator!\nI'm a bot created to help you remember important events.`,
     },
-    add: {
+    addEvent: {
       importantEvent: ["I won't forget your", '!! 😎.'],
       normalEvent: 'Great! I will remind you of this event.',
       lengthEventNameOrFormatDate:
@@ -16,7 +16,15 @@ module.exports = {
       thereIsSimilarEvent: '😲 I think you created this event before. Look at this:',
     },
   },
-  importantEvents: {
+  events: {
+    reminder: ['Hi!, The event: ', "you're welcome!🦾"],
+    fields: {
+      eventName: 'Event Name: ',
+      eventDate: 'Event date: ',
+      eventDesc: 'Event description: ',
+    },
+  },
+  defaultEvents: {
     birthday: '🥳 HAPPY BIRTHDAY!!',
   },
   logger: {
