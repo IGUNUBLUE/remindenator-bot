@@ -1,12 +1,13 @@
 require('dotenv').config({ path: './.env' });
 
 module.exports = {
-  telegraf_key: process.env.TG_TOKEN,
-  mongo_url: process.env.MONGODB_URL,
-  mongo_db_name: process.env.BD_NAME,
+  telegramBotKey: process.env.TG_TOKEN,
+  dbUrl: process.env.MONGODB_URL,
+  dbName: process.env.BD_NAME,
   eventsCollection: 'events',
   groupsCollection: 'groups',
   cronTimeZone: process.env.CRON_TIME_ZONE,
+  cronExecutionTime: process.env.CRON_EXECUTION_TIME,
   commandNames: {
     start: 'start',
     addEvent: 'add',
