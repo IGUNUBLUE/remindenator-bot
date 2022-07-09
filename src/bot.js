@@ -1,5 +1,5 @@
 const { Telegraf } = require('telegraf');
-const messages = require('./constants/text-strings.constant');
+const strings = require('./constants/strings.constant');
 
 const logger = require('./services/logger.service');
 const config = require('./config');
@@ -14,6 +14,6 @@ bot.command(config.commandNames.addEvent, (ctx) =>
   cmdAdd(ctx, config.commandNames.addEvent)
 );
 
-logger.info(messages.logger.info.firstStar);
+logger.info(strings.logger.info.firstStar);
 
 module.exports = bot;
