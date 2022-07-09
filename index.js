@@ -8,7 +8,7 @@ const logger = require('./src/services/logger.service');
 async function startApp() {
   try {
     bot.launch();
-    await mongoose.connect(config.mongo_url);
+    await mongoose.connect(config.dbUrl);
     logger.info(strings.logger.info.dbConnection);
     // reminderJob(bot).start();
   } catch (err) {
