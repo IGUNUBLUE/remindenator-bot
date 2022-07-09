@@ -76,10 +76,8 @@ module.exports = async function addEvent(ctx, commandName) {
       await newEvent.save();
 
       if (defaultEvents[eventName]) {
-        const [startFragment, endFragment] = strings.commands.addEvent.importantEvent;
-        ctx.replyWithMarkdown(
-          `${startFragment} ${defaultEvents[eventName]}${endFragment}`
-        );
+        const { partOne, partTwo } = strings.commands.addEvent.defaultEvent;
+        ctx.replyWithMarkdown(`${partOne} ${defaultEvents[eventName]}${partTwo}`);
       } else {
         ctx.replyWithMarkdown(strings.commands.addEvent.normalEvent);
       }

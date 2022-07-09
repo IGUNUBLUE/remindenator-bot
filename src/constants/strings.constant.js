@@ -7,7 +7,7 @@ module.exports = {
       executionReply: `👋🏻 Hi, I'm remindenator!\nI'm a bot created to help you remember important events.`,
     },
     addEvent: {
-      importantEvent: ["I won't forget your", '!! 😎.'],
+      defaultEvent: { partOne: "I won't forget your", partTwo: '!! 😎.' },
       normalEvent: 'Great! I will remind you of this event.',
       lengthEventNameOrFormatDate:
         "Please write a real event name. Perhaps it is too short or too long or I think the date don't have the correct format.",
@@ -17,7 +17,7 @@ module.exports = {
     },
   },
   events: {
-    reminder: ['Hi!, The event: ', "you're welcome!🦾"],
+    reminder: { partOne: 'Hi!, The event: ', partTwo: "you're welcome!🦾" },
     fields: {
       eventName: 'Event Name: ',
       eventDate: 'Event date: ',
