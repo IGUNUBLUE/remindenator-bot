@@ -43,19 +43,20 @@ module.exports = async function addEvent(ctx, commandName) {
         from: { id: userId, first_name: firstName, username },
         chat: { id: chatId },
       } = ctx.message;
+
       const eventDescription = textInCommand.split('|')[2] || '';
       const [day, month, year] = eventDate.split('-');
-      const isoDateFormat = `${year}-${month}-${day}`;
+      const isoDate = `${year}-${month}-${day}`;
       const foundEvent = await EventModel.findOne({
         user_id: userId,
         event_name: eventName,
-        event_date: isoDateFormat,
+        event_date: isoDate,
       }).exec();
 
       if (
         foundEvent &&
         eventName === foundEvent.event_name &&
-        dayjsPlus(foundEvent.event_date).isSame(new Date(isoDateFormat))
+        dayjsPlus(foundEvent.event_date).isSame(new Date(isoDate))
       ) {
         const event = defaultEvents[eventName];
         return ctx.replyWithMarkdown(
@@ -74,7 +75,7 @@ module.exports = async function addEvent(ctx, commandName) {
         user_id: userId,
         username,
         first_name: firstName,
-        event_date: isoDateFormat,
+        event_date: isoDate,
         event_name: eventName,
         event_description: eventDescription,
       });
