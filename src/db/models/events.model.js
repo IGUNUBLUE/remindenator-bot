@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const config = require('../../config');
 
 const eventsSchema = new mongoose.Schema(
   {
@@ -11,6 +12,7 @@ const eventsSchema = new mongoose.Schema(
     event_name: String,
     event_description: String,
   },
+  { collection: config.eventsCollection },
   { timestamps: true }
 );
 
