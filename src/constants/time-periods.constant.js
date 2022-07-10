@@ -3,6 +3,7 @@ module.exports = {
     user: {
       eventsDate: 'DD-MM-YYYY',
     },
+    ISOWithoutTime: 'YYYY-MM-DD',
   },
   months: [
     'January',
