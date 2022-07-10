@@ -7,6 +7,7 @@ const typeChatVerification = require('../../utils/type-chat-verification.utils')
 const getUuid = require('../../utils/get-uuid.utils');
 const dayjsPlus = require('../../utils/extended-dayjs.util');
 const getFullCommand = require('../../utils/get-full-command.utils');
+const buildMultilineMessage = require('../../utils/build-multiline-message.utils');
 
 const MINIMUM_LENGTH = 3;
 const MAXIMUM_LENGTH = 30;
@@ -52,14 +53,14 @@ module.exports = async function addEvent(ctx, commandName) {
         eventName === foundEvent.event_name &&
         dayjsPlus(foundEvent.event_date).isSame(new Date(isoDateFormat))
       ) {
+        const event = defaultEvents[eventName];
         return ctx.replyWithMarkdown(
-          `${strings.commands.addEvent.thereIsSimilarEvent}\n *${
-            strings.events.fields.eventName
-          }*${
-            defaultEvents[eventName] ? `My ${defaultEvents[eventName]}` : eventName
-          }\n*${strings.events.fields.eventDate}*${eventDate}\n*${
-            strings.events.fields.eventDesc
-          }*${eventDescription}`
+          buildMultilineMessage([
+            strings.commands.addEvent.thereIsSimilarEvent,
+            `*${strings.events.fields.eventName}* ${event ? `My ${event}` : eventName}`,
+            `*${strings.events.fields.eventDate}* ${eventDate}`,
+            `*${strings.events.fields.eventDesc}* ${eventDescription}`,
+          ])
         );
       }
 
