@@ -5,7 +5,7 @@ module.exports = {
   dbUrl: process.env.DB_URL,
   dbName: process.env.BD_NAME,
   eventsCollection: 'events',
-  groupsCollection: 'groups',
+  configurationsCollection: 'configurations',
   cronTimeZone: process.env.CRON_TIME_ZONE,
   cronExecutionTime: process.env.CRON_EXECUTION_TIME,
   commandNames: {
