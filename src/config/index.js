@@ -2,7 +2,7 @@ require('dotenv').config({ path: './.env' });
 
 module.exports = {
   telegramBotKey: process.env.TG_TOKEN,
-  dbUrl: process.env.MONGODB_URL,
+  dbUrl: process.env.DB_URL,
   dbName: process.env.BD_NAME,
   eventsCollection: 'events',
   groupsCollection: 'groups',
