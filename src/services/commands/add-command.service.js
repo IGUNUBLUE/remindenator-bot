@@ -21,7 +21,9 @@ module.exports = async function addEvent(ctx, commandName) {
       const textInCommand = ctx.message.text.replace(fullCmd, '');
 
       if (!textInCommand.length || !textInCommand.includes('|')) {
-        return ctx.reply(strings.commands.addEvent.withoutFieldsDividerOrCharacters);
+        return ctx.replyWithMarkdown(
+          strings.commands.addEvent.withoutFieldsDividerOrCharacters
+        );
       }
 
       const eventName = textInCommand.split('|')[0].trim();
@@ -32,7 +34,9 @@ module.exports = async function addEvent(ctx, commandName) {
         eventName.length > MAXIMUM_LENGTH ||
         !dayjsPlus(eventDate, timePeriods.format.user.eventsDate, true).isValid()
       ) {
-        return ctx.reply(strings.commands.addEvent.lengthEventNameOrFormatDate);
+        return ctx.replyWithMarkdown(
+          strings.commands.addEvent.lengthEventNameOrFormatDate
+        );
       }
 
       const {
