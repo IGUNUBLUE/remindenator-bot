@@ -1,6 +1,6 @@
 module.exports = {
   main: {
-    typeChat: 'Sorry... I just can work in groups.',
+    typeChat: 'Sorry... I just can work in super groups.',
   },
   commands: {
     start: {
@@ -17,7 +17,12 @@ module.exports = {
     },
   },
   events: {
-    reminder: { partOne: 'Hi!, The event: ', partTwo: "you're welcome!🦾" },
+    reminder: {
+      partOne: 'Hi!, The',
+      partTwo: 'event is today!! ⏰',
+      partThree: 'Details:',
+      partFour: "you're welcome!🦾",
+    },
     fields: {
       eventName: 'Event Name: ',
       eventDate: 'Event date: ',
