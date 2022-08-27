@@ -51,14 +51,10 @@ module.exports = async function addEvent(ctx, commandName) {
         user_id: userId,
         event_name: eventName,
         event_date: isoDate,
+        chat_id: chatId,
       }).exec();
 
-      if (
-        foundEvent &&
-        eventName === foundEvent.event_name &&
-        dayjsPlus(foundEvent.event_date).isSame(new Date(isoDate)) &&
-        chatId === foundEvent.chat_id
-      ) {
+      if (foundEvent) {
         const event = defaultEvents[eventName];
         return ctx.replyWithMarkdown(
           buildMultilineMessage([
