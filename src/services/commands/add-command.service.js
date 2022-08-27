@@ -56,7 +56,8 @@ module.exports = async function addEvent(ctx, commandName) {
       if (
         foundEvent &&
         eventName === foundEvent.event_name &&
-        dayjsPlus(foundEvent.event_date).isSame(new Date(isoDate))
+        dayjsPlus(foundEvent.event_date).isSame(new Date(isoDate)) &&
+        chatId === foundEvent.chat_id
       ) {
         const event = defaultEvents[eventName];
         return ctx.replyWithMarkdown(
