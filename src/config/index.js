@@ -2,8 +2,7 @@ require('dotenv').config({ path: './.env' });
 
 module.exports = {
   telegramBotKey: process.env.TG_TOKEN,
-  dbUrl: process.env.DB_URL,
-  dbName: process.env.BD_NAME,
+  dbUrl: `${process.env.DB_URL}/${process.env.BD_NAME}`,
   eventsCollection: 'events',
   configurationsCollection: 'configurations',
   cronTimeZone: process.env.CRON_TIME_ZONE,
